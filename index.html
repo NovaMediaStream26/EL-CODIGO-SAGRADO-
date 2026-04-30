@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecánica de la Tarde - Nova Media Stream</title>
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            border: 2px solid #f1c40f;
+            border-radius: 15px;
+            padding: 30px;
+            background: linear-gradient(145deg, #1a1a1a, #000);
+        }
+        h1 { color: #f1c40f; text-transform: uppercase; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        .btn-revelar {
+            background-color: #f1c40f;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-revelar:hover { transform: scale(1.05); background-color: #d4ac0d; }
+        #reto {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid #333;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .footer { margin-top: 50px; font-size: 0.8rem; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Nova Media Stream</h1>
+        <h3>🔓 Reto del Segundo Dígito</h3>
+        <p>¿Estás listo para completar el código de hoy? Presiona el botón para revelar tu misión de la tarde.</p>
+        
+        <button class="btn-revelar" onclick="revelarMision()">DESCUBRIR MISIÓN</button>
+
+        <div id="reto">
+            <h2 style="color: #3498db;">TU MISIÓN:</h2>
+            <p id="texto-mision">Cargando misión...</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 Nova Media Stream CR - HN IPTV
+    </div>
+
+    <script>
+        function revelarMision() {
+            document.getElementById('reto').style.display = 'block';
+            // Aquí puedes cambiar la pregunta según el día
+            document.getElementById('texto-mision').innerHTML = 
+                "Mira el último video subido a nuestro canal de YouTube. ¿Cuántas veces aparece el logo de **HN** en los primeros 30 segundos? <br><br> <b>Ese número es tu SEGUNDO DÍGITO.</b>";
+        }
+    </script>
+</body>
+</html>
+
