@@ -3,74 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mecánica de la Tarde - Nova Media Stream</title>
+    <title>El Código Sagrado - HN IPTV</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <style>
         body {
-            background-color: #0f0f0f;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                        url('https://i.imgur.com/hwmUISs.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            padding: 50px 20px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
+
         .container {
-            max-width: 600px;
-            margin: auto;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.9);
             border: 2px solid #f1c40f;
-            border-radius: 15px;
-            padding: 30px;
-            background: linear-gradient(145deg, #1a1a1a, #000);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(241, 196, 15, 0.5);
+            text-align: center;
+            margin-top: 20px;
         }
-        h1 { color: #f1c40f; text-transform: uppercase; }
-        p { font-size: 1.2rem; line-height: 1.6; }
-        .btn-revelar {
+
+        h1 {
+            color: #f1c40f;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: block;
+            margin: 15px 0;
+        }
+
+        .game-section {
+            background: rgba(241, 196, 15, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px dashed #f1c40f;
+        }
+
+        .btn-main {
             background-color: #f1c40f;
             color: black;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+            padding: 18px 40px;
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
-            margin-top: 20px;
             transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
         }
-        .btn-revelar:hover { transform: scale(1.05); background-color: #d4ac0d; }
-        #reto {
+
+        .btn-main:hover {
+            transform: scale(1.05);
+            background-color: #d4ac0d;
+        }
+
+        /* Modal */
+        .modal {
             display: none;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 1px solid #333;
-            animation: fadeIn 1s;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer { margin-top: 50px; font-size: 0.8rem; color: #666; }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid #f1c40f;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        input:focus { border-color: #f1c40f; outline: none; }
+
+        .btn-enviar {
+            background: #27ae60;
+            color: white;
+            width: 95%;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .footer { margin-top: 40px; color: #777; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Nova Media Stream</h1>
-        <h3>🔓 Reto del Segundo Dígito</h3>
-        <p>¿Estás listo para completar el código de hoy? Presiona el botón para revelar tu misión de la tarde.</p>
+        <h1>EL CÓDIGO SAGRADO DE HN IPTV</h1>
         
-        <button class="btn-revelar" onclick="revelarMision()">DESCUBRIR MISIÓN</button>
+        <div class="intro-text">
+            <p>¡La espera terminó y los premios son reales!</p>
+            <p>Lanzamos nuestra dinámica de Códigos Diarios. Entre más códigos completes, ¡más oportunidades tienes de ganar!</p>
+            
+            <span class="highlight">💰 EL BOTÍN: 50,000 HN COINS</span>
+            
+            <p>Vamos a premiar la fidelidad de nuestra comunidad repartiendo este gran premio entre <b>¡36 GANADORES!</b> 🎊</p>
+        </div>
 
-        <div id="reto">
-            <h2 style="color: #3498db;">TU MISIÓN:</h2>
-            <p id="texto-mision">Cargando misión...</p>
+        <div class="game-section">
+            <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE HOY</h3>
+            <p>Busca en el último video de nuestro canal el momento exacto del login.</p>
+            <p><i>Resuelve el acertijo visual para obtener el segundo dígito.</i></p>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <p style="text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px;">Registra tu código diario acá</p>
+            <button class="btn-main" onclick="openModal()">Registrar Tu Código</button>
+        </div>
+
+        <div class="footer">
+            © 2026 Nova Media Stream CR | Sorteo: 23 de Mayo
         </div>
     </div>
 
-    <div class="footer">
-        © 2026 Nova Media Stream CR - HN IPTV
+    <div id="registroModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #f1c40f;">REGISTRO</h2>
+            <p>Ingresa tus datos correctamente</p>
+            
+            <input type="text" id="userName" placeholder="Nombre Completo">
+            <input type="tel" id="userWhatsApp" placeholder="WhatsApp (Ej: +506...)">
+            <input type="text" id="userCode" placeholder="Código del día (3 dígitos)" maxlength="3">
+            
+            <button class="btn-enviar" onclick="enviarAFirebase()">ENVIAR AHORA</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancelar</button>
+        </div>
     </div>
 
     <script>
-        function revelarMision() {
-            document.getElementById('reto').style.display = 'block';
-            // Aquí puedes cambiar la pregunta según el día
-            document.getElementById('texto-mision').innerHTML = 
-                "Mira el último video subido a nuestro canal de YouTube. ¿Cuántas veces aparece el logo de **HN** en los primeros 30 segundos? <br><br> <b>Ese número es tu SEGUNDO DÍGITO.</b>";
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfc12weEpHrrd1BOI8gpcfGXYJ1g4Mf20",
+            authDomain: "sorteo-hn-iptv.firebaseapp.com",
+            projectId: "sorteo-hn-iptv",
+            storageBucket: "sorteo-hn-iptv.firebasestorage.app",
+            messagingSenderId: "708840084408",
+            appId: "1:708840084408:web:e17a25a4873f6c57bc354d"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function openModal() { document.getElementById("registroModal").style.display = "block"; }
+        function closeModal() { document.getElementById("registroModal").style.display = "none"; }
+
+        function enviarAFirebase() {
+            const nombre = document.getElementById('userName').value;
+            const whatsapp = document.getElementById('userWhatsApp').value;
+            const codigo = document.getElementById('userCode').value;
+
+            if(nombre && whatsapp && codigo.length === 3) {
+                db.collection("participantes").add({
+                    nombre: nombre,
+                    whatsapp: whatsapp,
+                    codigo_dia: codigo,
+                    fecha_registro: new Date().toLocaleString()
+                })
+                .then(() => {
+                    alert("¡Excelente! Datos guardados. ¡Mucha suerte!");
+                    closeModal();
+                })
+                .catch((error) => {
+                    alert("Hubo un error al guardar. Revisa tu conexión.");
+                    console.error("Error: ", error);
+                });
+            } else {
+                alert("Por favor, llena todos los campos correctamente.");
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("registroModal")) { closeModal(); }
         }
     </script>
 </body>
