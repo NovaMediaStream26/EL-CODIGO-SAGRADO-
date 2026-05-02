@@ -11,7 +11,7 @@
     <style>
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                        url('https://i.imgur.com/hwmUISs.jpeg');
+                        url('https://i.imgur.com/RnNHfE2.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -47,7 +47,6 @@
             border: 1px dashed #f1c40f;
         }
 
-        /* Estilo para la imagen del reto */
         .puzzle-image {
             width: 100%;
             max-width: 400px;
@@ -66,7 +65,6 @@
         }
         .btn-main:hover { transform: scale(1.05); background-color: #d4ac0d; }
 
-        /* Modales */
         .modal {
             display: none; position: fixed; z-index: 1000;
             left: 0; top: 0; width: 100%; height: 100%;
@@ -79,7 +77,6 @@
             width: 90%; max-width: 400px; border-radius: 20px; text-align: center;
         }
         
-        /* Modal para agrandar imagen */
         #imgModal img {
             margin: auto; display: block; width: 95%; max-width: 800px;
             margin-top: 50px; border: 3px solid #f1c40f; border-radius: 10px;
@@ -106,7 +103,7 @@
             <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE LA TARDE: BUSCA EL NÚMERO</h3>
             <p>Encuentra el número oculto en la imagen para completar tu código:</p>
             
-            <img src="https://i.imgur.com/hwmUISs.jpeg" class="puzzle-image" onclick="zoomImg(this)" alt="Reto HN IPTV">
+            <img src="https://i.imgur.com/RnNHfE2.png" class="puzzle-image" onclick="zoomImg(this)" alt="Reto HN IPTV">
             
             <p style="margin-top:15px;"><i>Toca la imagen para verla en grande. <br>Ese número es tu <b>SEGUNDO DÍGITO</b>.</i></p>
         </div>
@@ -147,11 +144,9 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Funciones Modal
         function openModal() { document.getElementById("registroModal").style.display = "block"; }
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         
-        // Función para agrandar imagen
         function zoomImg(element) {
             document.getElementById("imgModal").style.display = "block";
             document.getElementById("imgFull").src = element.src;
