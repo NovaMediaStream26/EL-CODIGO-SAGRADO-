@@ -47,14 +47,16 @@
             border: 1px dashed #f1c40f;
         }
 
-        .puzzle-text {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            color: #ffffff;
-            text-align: left;
-            display: inline-block;
-            margin: 20px 0;
+        /* Estilo para la imagen del reto */
+        .puzzle-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            border: 2px solid #f1c40f;
+            cursor: zoom-in;
+            transition: 0.3s;
         }
+        .puzzle-image:hover { opacity: 0.8; }
 
         .btn-main {
             background-color: #f1c40f; color: black; border: none;
@@ -64,15 +66,23 @@
         }
         .btn-main:hover { transform: scale(1.05); background-color: #d4ac0d; }
 
+        /* Modales */
         .modal {
             display: none; position: fixed; z-index: 1000;
             left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.95);
+            overflow: auto;
         }
         .modal-content {
             background-color: #1a1a1a; margin: 10% auto;
             padding: 30px; border: 2px solid #f1c40f;
             width: 90%; max-width: 400px; border-radius: 20px; text-align: center;
+        }
+        
+        /* Modal para agrandar imagen */
+        #imgModal img {
+            margin: auto; display: block; width: 95%; max-width: 800px;
+            margin-top: 50px; border: 3px solid #f1c40f; border-radius: 10px;
         }
 
         input { width: 90%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; }
@@ -93,18 +103,12 @@
         </div>
 
         <div class="game-section">
-            <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE LA TARDE: EL SEGUNDO DÍGITO</h3>
-            <p>Resuelve el siguiente acertijo para encontrar el número oculto:</p>
+            <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE LA TARDE: BUSCA EL NÚMERO</h3>
+            <p>Encuentra el número oculto en la imagen para completar tu código:</p>
             
-            <div class="puzzle-text">
-                <b>🧩 Acertijo: El número secreto</b><br><br>
-                • Soy un número que está entre el 3 y el 7.<br>
-                • Si me sumas 3, obtienes 8.<br>
-                • Si me restas 2, obtienes 3.<br><br>
-                <b>¿Qué número soy?</b>
-            </div>
+            <img src="https://i.imgur.com/hwmUISs.jpeg" class="puzzle-image" onclick="zoomImg(this)" alt="Reto HN IPTV">
             
-            <p><i>La respuesta es tu SEGUNDO DÍGITO.</i></p>
+            <p style="margin-top:15px;"><i>Toca la imagen para verla en grande. <br>Ese número es tu <b>SEGUNDO DÍGITO</b>.</i></p>
         </div>
 
         <div style="margin-top: 30px;">
@@ -121,8 +125,13 @@
             <input type="tel" id="userWhatsApp" placeholder="WhatsApp">
             <input type="text" id="userCode" placeholder="Código (3 dígitos)" maxlength="3">
             <button class="btn-enviar" onclick="enviarAFirebase()">ENVIAR AHORA</button>
-            <button onclick="closeModal()" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancelar</button>
+            <button onclick="closeModal('registroModal')" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancelar</button>
         </div>
+    </div>
+
+    <div id="imgModal" class="modal" onclick="closeModal('imgModal')">
+        <span style="position:absolute; top:20px; right:30px; font-size:40px; color:white; cursor:pointer;">&times;</span>
+        <img id="imgFull" src="">
     </div>
 
     <script>
@@ -138,9 +147,15 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Funciones Registro
+        // Funciones Modal
         function openModal() { document.getElementById("registroModal").style.display = "block"; }
-        function closeModal() { document.getElementById("registroModal").style.display = "none"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        
+        // Función para agrandar imagen
+        function zoomImg(element) {
+            document.getElementById("imgModal").style.display = "block";
+            document.getElementById("imgFull").src = element.src;
+        }
 
         function enviarAFirebase() {
             const nombre = document.getElementById('userName').value;
@@ -152,9 +167,9 @@
                     nombre: nombre, whatsapp: whatsapp, codigo_dia: codigo, fecha: new Date().toLocaleString()
                 }).then(() => {
                     alert("¡Registro exitoso!");
-                    closeModal();
+                    closeModal('registroModal');
                 });
-            } else { alert("Completa los datos."); }
+            } else { alert("Completa los datos correctamente."); }
         }
     </script>
 </body>
