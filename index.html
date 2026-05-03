@@ -47,15 +47,14 @@
             border: 1px dashed #f1c40f;
         }
 
-        .puzzle-image {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
-            border: 2px solid #f1c40f;
-            cursor: zoom-in;
-            transition: 0.3s;
+        /* Estilo para el reto matemático */
+        .math-box {
+            font-size: 1.8rem;
+            color: #f1c40f;
+            font-weight: bold;
+            margin: 20px 0;
+            letter-spacing: 2px;
         }
-        .puzzle-image:hover { opacity: 0.8; }
 
         .btn-main {
             background-color: #f1c40f; color: black; border: none;
@@ -68,8 +67,7 @@
         .modal {
             display: none; position: fixed; z-index: 1000;
             left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.95);
-            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
         }
         .modal-content {
             background-color: #1a1a1a; margin: 10% auto;
@@ -77,11 +75,6 @@
             width: 90%; max-width: 400px; border-radius: 20px; text-align: center;
         }
         
-        #imgModal img {
-            margin: auto; display: block; width: 95%; max-width: 800px;
-            margin-top: 50px; border: 3px solid #f1c40f; border-radius: 10px;
-        }
-
         input { width: 90%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; }
         .btn-enviar { background: #27ae60; color: white; width: 95%; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
@@ -100,12 +93,14 @@
         </div>
 
         <div class="game-section">
-            <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE LA TARDE: BUSCA EL NÚMERO</h3>
-            <p>Encuentra el número oculto en la imagen para completar tu código:</p>
+            <h3 style="color: #f1c40f; margin-top: 0;">🧩 RETO DE LA TARDE: OPERACIÓN SECRETA</h3>
+            <p>Resuelve esta operación y descubre el número secreto:</p>
             
-            <img src="https://i.imgur.com/RnNHfE2.png" class="puzzle-image" onclick="zoomImg(this)" alt="Reto HN IPTV">
+            <div class="math-box">
+                (5 + 3 - 7) × 2 ÷ 2 = ?
+            </div>
             
-            <p style="margin-top:15px;"><i>Toca la imagen para verla en grande. <br>Ese número es tu <b>SEGUNDO DÍGITO</b>.</i></p>
+            <p style="margin-top:15px;"><i>¿Cuál es el resultado? <br>Este número es tu <b>SEGUNDO DÍGITO</b>.</i></p>
         </div>
 
         <div style="margin-top: 30px;">
@@ -122,13 +117,8 @@
             <input type="tel" id="userWhatsApp" placeholder="WhatsApp">
             <input type="text" id="userCode" placeholder="Código (3 dígitos)" maxlength="3">
             <button class="btn-enviar" onclick="enviarAFirebase()">ENVIAR AHORA</button>
-            <button onclick="closeModal('registroModal')" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancelar</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancelar</button>
         </div>
-    </div>
-
-    <div id="imgModal" class="modal" onclick="closeModal('imgModal')">
-        <span style="position:absolute; top:20px; right:30px; font-size:40px; color:white; cursor:pointer;">&times;</span>
-        <img id="imgFull" src="">
     </div>
 
     <script>
@@ -145,12 +135,7 @@
         const db = firebase.firestore();
 
         function openModal() { document.getElementById("registroModal").style.display = "block"; }
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        
-        function zoomImg(element) {
-            document.getElementById("imgModal").style.display = "block";
-            document.getElementById("imgFull").src = element.src;
-        }
+        function closeModal() { document.getElementById("registroModal").style.display = "none"; }
 
         function enviarAFirebase() {
             const nombre = document.getElementById('userName').value;
@@ -162,10 +147,11 @@
                     nombre: nombre, whatsapp: whatsapp, codigo_dia: codigo, fecha: new Date().toLocaleString()
                 }).then(() => {
                     alert("¡Registro exitoso!");
-                    closeModal('registroModal');
+                    closeModal();
                 });
             } else { alert("Completa los datos correctamente."); }
         }
     </script>
 </body>
 </html>
+
